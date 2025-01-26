@@ -20,7 +20,7 @@
                         <Image url="@../image/browse-it.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="txtAddress" alignment="CENTER" onAction="#txtAddressOnAction" prefHeight="26.0" prefWidth="564.0" promptText="Enter URL here" text="www.google.com" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="txtAddress" alignment="CENTER" onAction="#txtAddressOnAction" prefHeight="26.0" prefWidth="564.0" promptText="Enter URL here" HBox.hgrow="ALWAYS" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
