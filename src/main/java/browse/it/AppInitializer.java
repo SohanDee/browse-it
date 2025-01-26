@@ -15,6 +15,10 @@ public class AppInitializer extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/scene/MainScene.fxml")));
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Browse-it");
+        primaryStage.show();
+        primaryStage.centerOnScreen();
     }
 }
