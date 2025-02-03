@@ -18,6 +18,7 @@ public class AppInitializer extends Application {
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/scene/MainScene.fxml")));
         primaryStage.setScene(scene);
         primaryStage.setTitle("Browse-it");
+        primaryStage.setFullScreen(true);
         primaryStage.show();
         primaryStage.centerOnScreen();
     }

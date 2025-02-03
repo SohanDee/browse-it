@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="browse.it.controller.MainSceneController">
+<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="browse.it.controller.MainSceneController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -26,7 +26,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </HBox>
-            <WebView fx:id="wbPreview" prefHeight="396.0" prefWidth="600.0" VBox.vgrow="ALWAYS" />
+            <WebView fx:id="wbPreview" prefWidth="900.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>
