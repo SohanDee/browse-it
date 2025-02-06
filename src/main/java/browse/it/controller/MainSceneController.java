@@ -33,7 +33,7 @@ public class MainSceneController {
         String protocol = null;
         int port = -1;
         String host = null;
-        String path = "/";
+        String path;
 
         if ((i = url.indexOf("://")) != -1) {
             protocol = url.substring(0, i);
@@ -58,6 +58,9 @@ public class MainSceneController {
             }
         }
         if (j != -1 && j != url.length()) path = url.substring(j);
+        else {
+            path = "/";
+        }
         if (host.isBlank() || port == -1) throw new RuntimeException("Invalid URL");
 
         System.out.println("Protocol: " + protocol);
@@ -69,6 +72,9 @@ public class MainSceneController {
         Socket socket = new Socket(host, port);
 
         String finalHost = host;
+        String finalProtocol = protocol;
+        int finalPort = port;
+
         new Thread(() -> {
             try {
                 InputStream is = socket.getInputStream();
@@ -77,7 +83,6 @@ public class MainSceneController {
 
                 String status = br.readLine();
                 int statusCode = Integer.parseInt(status.split(" ")[1]);
-                System.out.println(statusCode);
                 boolean redirection = statusCode >= 300 && statusCode <= 399;
 
                 String line;
@@ -87,21 +92,27 @@ public class MainSceneController {
                     String value = line.split(":")[1];
 
                     if (redirection) {
-//                        loadWebPage();
+                        if(header.equalsIgnoreCase("location")) {
+                            loadWebPage(value);
+                        }
                     } else {
                         if (header.equalsIgnoreCase("content-type")) {
                             contentType = value.split(";")[0].strip();
                         }
                     }
                 }
-                String content = null;
+                StringBuilder content = new StringBuilder();
                 if(contentType != null && contentType.equalsIgnoreCase("text/html")) {
-                    while((line = br.readLine()) != null && !line.isBlank()) {
-                        content += br.readLine();
+                    while((line = br.readLine()) != null) {
+                        content.append(line);
                     }
                 }
-                String finalContent = content;
-                Platform.runLater(() -> wbPreview.getEngine().loadContent(finalContent));
+
+                content.delete(0, content.indexOf("<"));
+                String baseUrl = "<base href=\"%s://%s:%d%s\" />".formatted(finalProtocol, finalHost, finalPort, path);
+                StringBuilder finalContent = content.insert((content.indexOf("<head>") + 6), baseUrl);
+
+                Platform.runLater(() -> wbPreview.getEngine().loadContent(finalContent.toString()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
